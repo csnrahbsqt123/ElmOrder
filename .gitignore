@@ -1,0 +1,6 @@
+.idea
+migrations
+*.db
+
+web_client
+vue_client

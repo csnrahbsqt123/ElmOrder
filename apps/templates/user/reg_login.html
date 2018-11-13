@@ -1,0 +1,28 @@
+{% extends 'public/base.html' %}
+
+{% block title %}
+    商家{{ flags }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="col-xs-6 col-xs-offset-3">
+            <div class="page-header">
+                <h3 class="text-center">商家</h3>
+            </div>
+            <form class="form-horizontal" method="post" action="" novalidate>
+                {% for items in form %}
+                    <div class="form-group">
+                        {{ items }}
+                        <span class="text-danger">{{ items.errors[0] }}</span>
+                    </div>
+                {% endfor %}
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-success">{{ flags }}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
