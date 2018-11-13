@@ -27,3 +27,4 @@ class BaseModel(db.Model):
 from apps.models import seller_model
 from apps.models import shop_model
 from apps.models import food_model
+from apps.models import buyer_model
