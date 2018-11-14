@@ -23,7 +23,7 @@ def category_view(pub_id):
         fc.shop_id = s1.pub_id
         db.session.add(fc)
         db.session.commit()
-        return redirect(url_for("cms.add_category", pub_id="{}".format(s1.pub_id)))
+        return redirect(url_for("cms.add_category", pub_id=s1.pub_id))
     return render_template("foods/cate_food.html", form=form, flags="分类添加")
 
 
@@ -53,12 +53,12 @@ def food_class_view(pub_id):
         return render_template("foods/cate_look.html", f1=f1, flags="查看", name=name)
 
 
-@cms_bp.route("/update_cate/<pub_id>/<id>/", endpoint="update_cate", methods=['GET', 'POST'])
+@cms_bp.route("/update_cate/<pub_id>/<int:cate_id>", endpoint="update_cate", methods=['GET', 'POST'])
 @login_required
-def food_class_update_view(pub_id, id):
+def food_class_update_view(pub_id,cate_id):
     """菜品分类更新"""
-
-    m1 = check_menu_pub_id(pub_id)
+    s1=check_shop_pub_id(pub_id)
+    m1 = check_shop_cate(s1,cate_id)
 
     # 请求方式是post就更新数据库
     if request.method == 'POST':
@@ -66,7 +66,7 @@ def food_class_update_view(pub_id, id):
         if form.validate():
             m1.set_attrs(form.data)
             db.session.commit()
-            return redirect(url_for("cms.add_category"))
+            return redirect(url_for("cms.category_look",pub_id=s1.pub_id))
     # 请求方式为get就回显内容
     else:
         form = FoodClassForm(current_user, data=dict(m1))

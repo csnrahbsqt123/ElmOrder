@@ -24,8 +24,7 @@ class ProductBase(object):
 
 class DevConfig(DevBase):
     SESSION_TYPE = "redis"
-    SESSION_REDIS = get_redis_address
-
+    SESSION_REDIS = get_redis_address()
 
 class DevAPIConfig(DevBase):
     SMS_LIFETIME = 300

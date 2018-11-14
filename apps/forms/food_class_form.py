@@ -1,5 +1,7 @@
 from wtforms import Form, StringField, SelectField, validators, DecimalField, BooleanField
 
+from apps.models.food_model import MenuCategory
+
 
 class FoodClassForm(Form):
     name = StringField(label="菜品分类名",
@@ -34,6 +36,18 @@ class FoodClassForm(Form):
     def __init__(self, user, *args, **kwargs):
         super(FoodClassForm, self).__init__(*args, **kwargs)
         self.shop_id.choices = [(i.pub_id, i.shop_name) for i in user.shop_seller]
+
+    # def __init__(self, shop, *args, **kwargs):
+    #     super(FoodClassForm, self).__init__(*args, **kwargs)
+    #     self.shop = shop
+    #
+    # def validate_is_default(self, obj):
+    #     m1 = MenuCategory.query.filter(
+    #         MenuCategory.shop == self.shop,
+    #         MenuCategory.is_default == True,
+    #     ).first()
+    #     if m1:
+    #         obj.data = False
 
 
 

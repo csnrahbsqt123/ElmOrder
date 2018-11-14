@@ -53,17 +53,6 @@
 
 {% endblock %}
 {% block end_js %}
-    {#    <script>#}
-    {#        window.onload = function () {#}
-    {#            var selected=document.getElementsByTagName("option");#}
-    {#            for (i=0;i<=selected.length;i++){#}
-    {#                var a=selected[i];#}
-    {#                if(a.getAttribute("value")=="{{ request.args.pub_id }}"){#}
-    {#                    a.setAttribute("selected","selected")#}
-    {#                }#}
-    {#            }#}
-    {#        }#}
-    {#    </script>#}
     <script>
         $(function () {
             var my_url = "{{ request.base_url }}";

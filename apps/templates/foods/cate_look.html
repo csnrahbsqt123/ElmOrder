@@ -26,7 +26,7 @@
                 {% for foo in f1 %}
                     <tr>
                         <th>{{ loop.index }}</th>
-                        <th><a href="{{ url_for('cms.update_cate',pub_id=foo.pub_id,id=foo.id) }}">{{ foo.name }}</a></th>
+                        <th><a href="{{ url_for('cms.update_cate',pub_id=foo.shop_id,cate_id=foo.id) }}">{{ foo.name }}</a></th>
                         <th>
                             <a href="{{ url_for('cms.add_foods',pub_id=foo.shop_id) }}">添加</a>
                             &nbsp;&nbsp;&nbsp;

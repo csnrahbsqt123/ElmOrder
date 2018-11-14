@@ -1,12 +1,15 @@
 import random
 
-from flask import jsonify, request, current_app
+from flask import jsonify, request, current_app, g
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 from apps.apis import api_bp
-from apps.forms.buyer_form import BuyerRegisterForm, BuyerLoginForm
-from apps.models import db
-from apps.models.buyer_model import BuyerModel
+from apps.forms.buyer_form import BuyerRegisterForm, BuyerLoginForm, AddressForm
+
+from apps.libs.tools.token_required import token_require
+
+from apps.models.buyer_model import BuyerModel, BuyerAddress,db
+from apps.models.food_model import MenuFood
 from apps.models.shop_model import ShopSellerModel
 
 
@@ -70,5 +73,46 @@ def buyer_login_view():
         return jsonify({"status": "false",
                         "message": "".join(["{}:{}".format(k, v[0]) for k, v in form.errors.items()])
                         })
+
+#添加收货地址
+@api_bp.route("/address/", methods=["POST"])
+@token_require
+def address_view():
+    form = AddressForm(request.form)
+    if form.validate():
+        if not form.id.data:
+            #说明是新添地址
+            b_addr = BuyerAddress()
+            b_addr.user=g.current_user
+            message="添加成功"
+        else:
+            #说明是修改地址
+            """获得该用户下所有的收货地址对象,是一个列表"""
+            addresses = g.current_user.addresses
+            """获得当前点击的地址对象"""
+            b_addr = addresses[form.id.data - 1]
+            message = "更新成功"
+        b_addr.set_attrs(form.data)
+        db.session.add(b_addr)
+        db.session.commit()
+        return jsonify({"status": "true", "message": message})
+    return jsonify({"status": "false", "message": "地址添加失败"})
+
+# 收获地址api
+@api_bp.route('/address/', endpoint='address', methods=['GET'])
+@token_require
+def get_address_list():
+    """获得该用户下所有的收货地址对象,是一个列表"""
+    addresses = g.current_user.addresses
+    addr_id = request.args.get('id')
+    if addr_id:
+        """如果获取到id,则进入更新界面"""
+        return jsonify(dict(addresses[int(addr_id) - 1]))
+    """如没有值,获得所有当前用户下的地址信息"""
+    result = [{**dict(address), 'id': num+1} for num, address in enumerate(addresses)]
+    return jsonify(result)
+
+
+
 
 

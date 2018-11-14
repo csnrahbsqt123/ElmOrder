@@ -49,3 +49,7 @@ class FoodForm(Form):
 
     def validate_goods_price(self, obj):
         obj.data = float("{:.2f}".format(obj.data))
+    #
+    # def __init__(self, shop, *args, **kwargs):
+    #     super(FoodForm, self).__init__(*args, **kwargs)
+    #     self.category_id.choices = [(cate.id, cate.name) for cate in shop.categories]

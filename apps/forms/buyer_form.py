@@ -1,5 +1,5 @@
 from flask import current_app
-from wtforms import Form, StringField, validators, PasswordField
+from wtforms import Form, StringField, validators, PasswordField, IntegerField
 
 from apps.models.buyer_model import BuyerModel
 
@@ -59,6 +59,7 @@ class BuyerRegisterForm(Form):
 
 
 class AddressForm(Form):
+    id = IntegerField(default=0)
     name = StringField(validators=[
         validators.DataRequired(message="收货人姓名未填写"),
         validators.Length(2, 16, message="用户名长度为2-16位")
