@@ -14,3 +14,4 @@ def error_page(error):
 if __name__ == '__main__':
     # print(app.config)
     manager.run()
+
