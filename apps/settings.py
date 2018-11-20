@@ -8,7 +8,7 @@ def url_base():
 
 
 def get_redis_address():
-    return Redis(host='192.168.199.132', port=6388)
+    return Redis(host='127.0.0.1', port=6388)
 
 
 class DevBase:

@@ -4,7 +4,7 @@ from apps.apis import api_bp
 from apps.models.food_model import MenuFood
 from apps.models.shop_model import ShopSellerModel
 
-
+#zhushi
 @api_bp.route("/shop/", endpoint="shop", methods=["GET"])
 def shop_view():
     shop_id = request.args.get("id")
